@@ -85,12 +85,25 @@ footer {
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-/* .research-project {
-    margin: 2em 0;
-    padding: 2em;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-} */
+.project-card h3 {
+    margin-top: 0;
+    margin-bottom: 0.8em;
+}
+
+.project-card p {
+    margin: 0.5em 0;
+}
+
+.project-card a {
+    display: inline-block;
+    margin-top: 0.8em;
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.project-card a:hover {
+    text-decoration: underline;
+}
 
 .contact {
     margin-top: 2em;
