@@ -30,6 +30,7 @@ nav a:hover {
 
 main {
     padding: 2rem;
+    padding-bottom: 4rem; /* Add extra padding at bottom */
     max-width: 800px;
     margin: auto;
     background: #fff;
@@ -41,9 +42,8 @@ footer {
     padding: 1rem 0;
     background: #333;
     color: #fff;
-    position: fixed;
+    /* Remove position: fixed */
     width: 100%;
-    bottom: 0;
 }
 
 .professional-links {
