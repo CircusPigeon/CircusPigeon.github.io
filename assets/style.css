@@ -45,3 +45,43 @@ footer {
     width: 100%;
     bottom: 0;
 }
+
+.professional-links {
+    margin: 2em 0;
+}
+
+.professional-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.professional-links a {
+    text-decoration: none;
+    color: #0066cc;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2em;
+    margin: 2em 0;
+}
+
+.project-card {
+    padding: 1.5em;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.research-project {
+    margin: 2em 0;
+    padding: 2em;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
