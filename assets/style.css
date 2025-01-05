@@ -69,12 +69,12 @@ footer {
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2em;
-    margin: 2em 0;
+    gap: 1.5em;  /* reduced from 2em */
+    margin: 1.5em 0;  /* reduced from 2em */
 }
 
 .project-card {
-    padding: 1.5em;
+    padding: 1.2em;  /* reduced from 1.5em */
     border: 1px solid #ddd;
     border-radius: 8px;
     transition: transform 0.2s;
@@ -85,12 +85,12 @@ footer {
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-.research-project {
+/* .research-project {
     margin: 2em 0;
     padding: 2em;
     background-color: #f8f9fa;
     border-radius: 8px;
-}
+} */
 
 .contact {
     margin-top: 2em;
