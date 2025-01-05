@@ -5,6 +5,9 @@ body {
     padding: 0;
     color: #333;
     background-color: #f4f4f4;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 header {
@@ -35,6 +38,9 @@ main {
     margin: auto;
     background: #fff;
     border-radius: 5px;
+    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 footer {
@@ -42,8 +48,8 @@ footer {
     padding: 1rem 0;
     background: #333;
     color: #fff;
-    /* Remove position: fixed */
     width: 100%;
+    margin-top: auto;
 }
 
 .professional-links {
@@ -84,4 +90,19 @@ footer {
     padding: 2em;
     background-color: #f8f9fa;
     border-radius: 8px;
+}
+
+.contact {
+    margin-top: 2em;
+    padding-top: 2em;
+    border-top: 1px solid #ddd;
+}
+
+.contact a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.contact a:hover {
+    text-decoration: underline;
 }
