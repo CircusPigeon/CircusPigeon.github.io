@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
@@ -19,6 +19,8 @@ header {
 
 header h1 {
     margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700; /* Bold */
 }
 
 nav a {
@@ -30,25 +32,26 @@ nav a {
     transition: color 0.3s ease;
 }
 
-nav a::before {
+nav a::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -3px;
+    left: 0;
     background-color: #ff6347;
-    z-index: -1;
-    transform: translateX(-100%);
+    transform-origin: bottom right;
     transition: transform 0.3s ease;
 }
 
-nav a:hover::before {
-    transform: translateX(0);
+nav a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
 }
 
 nav a:hover {
-    color: #fff; /* Keep text color white on hover */
+    color: #47a3ff; /* Change color on hover */
 }
 
 main {
@@ -98,6 +101,7 @@ footer {
     border: 1px solid #ddd;
     border-radius: 8px;
     transition: transform 0.2s;
+    font-family: 'Roboto', sans-serif;
 }
 
 .project-card:hover {
@@ -108,16 +112,19 @@ footer {
 .project-card h3 {
     margin-top: 0;
     margin-bottom: 0.8em;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700; /* Bold */
 }
 
 .project-card p {
     margin: 0.5em 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 .project-card a {
     display: inline-block;
     margin-top: 0.8em;
-    color: #0066cc;
+    color: #47a3ff;
     text-decoration: none;
 }
 
@@ -132,7 +139,7 @@ footer {
 }
 
 .contact a {
-    color: #0066cc;
+    color: #47a3ff;
     text-decoration: none;
 }
 
