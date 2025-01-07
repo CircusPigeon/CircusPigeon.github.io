@@ -30,26 +30,25 @@ nav a {
     transition: color 0.3s ease;
 }
 
-nav a::after {
+nav a::before {
     content: '';
     position: absolute;
-    width: 100%;
-    transform: scaleX(0);
-    height: 2px;
-    bottom: -3px;
+    top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
     background-color: #ff6347;
-    transform-origin: bottom right;
+    z-index: -1;
+    transform: translateX(-100%);
     transition: transform 0.3s ease;
 }
 
-nav a:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
+nav a:hover::before {
+    transform: translateX(0);
 }
 
 nav a:hover {
-    color: #ff6347; /* Change color on hover */
+    color: #fff; /* Keep text color white on hover */
 }
 
 main {
