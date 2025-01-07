@@ -25,10 +25,31 @@ nav a {
     color: #fff;
     margin: 0 1rem;
     text-decoration: none;
+    position: relative;
+    display: inline-block;
+    transition: color 0.3s ease;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -3px;
+    left: 0;
+    background-color: #ff6347;
+    transform-origin: bottom right;
+    transition: transform 0.3s ease;
+}
+
+nav a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
 }
 
 nav a:hover {
-    text-decoration: underline;
+    color: #ff6347; /* Change color on hover */
 }
 
 main {
