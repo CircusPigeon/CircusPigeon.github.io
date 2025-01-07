@@ -40,7 +40,7 @@ nav a::after {
     height: 2px;
     bottom: -3px;
     left: 0;
-    background-color: #ff6347;
+    background-color: #47a3ff;
     transform-origin: bottom right;
     transition: transform 0.3s ease;
 }
@@ -75,6 +75,12 @@ footer {
     margin-top: auto;
 }
 
+.publications-page a {
+    color: #47a3ff; /* Change this to your desired color */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
 .professional-links {
     margin: 2em 0;
 }
@@ -86,7 +92,7 @@ footer {
 
 .professional-links a {
     text-decoration: none;
-    color: #0066cc;
+    color: #47a3ff;
 }
 
 .projects-grid {
