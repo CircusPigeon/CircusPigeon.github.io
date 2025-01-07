@@ -75,17 +75,6 @@ footer {
     margin-top: auto;
 }
 
-.publications-page a {
-    color: #47a3ff;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.publications-page a:hover {
-    color: #47a3ff;
-    text-decoration: underline;
-}
-
 .professional-links {
     margin: 2em 0;
 }
@@ -98,6 +87,10 @@ footer {
 .professional-links a {
     text-decoration: none;
     color: #47a3ff;
+}
+
+.professional-links a:hover {
+    text-decoration: underline;
 }
 
 .projects-grid {
