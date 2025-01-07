@@ -81,7 +81,7 @@ footer {
 
 .professional-links ul {
     list-style: disc;
-    padding: 0;
+    padding-left: 2em;
 }
 
 .professional-links a {
