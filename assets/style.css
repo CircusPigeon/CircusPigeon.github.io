@@ -150,3 +150,25 @@ footer {
 .contact a:hover {
     text-decoration: underline;
 }
+
+/* Add styles for the About Me section */
+.about-container {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-text {
+    flex: 1;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+}
