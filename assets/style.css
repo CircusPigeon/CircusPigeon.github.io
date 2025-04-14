@@ -173,12 +173,13 @@ footer {
     line-height: 1.6;
 }
 
-/* Scale down the math image on the index page */
+/* Rotate and scale down the math image on the index page */
 .math-image {
-    max-width: 100%;
+    max-width: 80%; /* Make the image smaller */
     height: auto;
     display: block;
     margin: 1.5rem auto;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: rotate(90deg); /* Rotate the image 90 degrees */
 }
