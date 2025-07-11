@@ -166,23 +166,35 @@ footer {
     transform: rotate(90deg); /* Rotate the image 90 degrees */
 }
 
+.arrow-list {
+    padding-left: 0;
+    margin-left: 0;
+}
+
 .arrow-list li {
     list-style: none;
     position: relative;
     padding-left: 1.5em;
+    text-align: left;
 }
+
 .arrow-list li::before {
     content: "➔";
     position: absolute;
     left: 0;
-    color: #000000;
+    color: #000;
     font-size: 1.2em;
+}
+
+.arrow-list a {
+    color: #115798;
+    text-decoration: none;
 }
 
 .arrow-list a:hover {
     text-decoration: underline;
 }
 
-a:visited {
+.arrow-list a:visited {
     color: #115798;
 }
