@@ -40,7 +40,7 @@ nav a::after {
     height: 2px;
     bottom: -3px;
     left: 0;
-    background-color: #115798;
+    background-color: #1f66a9;
     transform-origin: bottom right;
     transition: transform 0.3s ease;
 }
@@ -51,7 +51,7 @@ nav a:hover::after {
 }
 
 nav a:hover {
-    color: #115798; /* Change color on hover */
+    color: #1f66a9; /* Change color on hover */
 }
 
 main {
@@ -110,7 +110,7 @@ footer {
 .project-card a {
     display: inline-block;
     margin-top: 0.8em;
-    color: #115798;
+    color: #1f66a9;
     text-decoration: none;
 }
 
@@ -125,7 +125,7 @@ footer {
 }
 
 .contact a {
-    color: #115798;
+    color: #1f66a9;
     text-decoration: none;
 }
 
@@ -189,7 +189,7 @@ footer {
 }
 
 .arrow-list a {
-    color: #115798;
+    color: #1f66a9;
     text-decoration: none;
 }
 
@@ -198,5 +198,5 @@ footer {
 }
 
 .arrow-list a:visited {
-    color: #115798;
+    color: #1f66a9;
 }
