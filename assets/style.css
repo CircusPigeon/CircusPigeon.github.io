@@ -75,24 +75,6 @@ footer {
     margin-top: auto;
 }
 
-.professional-links {
-    margin: 2em 0;
-}
-
-.professional-links ul {
-    list-style: disc;
-    padding-left: 2em;
-}
-
-.professional-links a {
-    text-decoration: none;
-    color: #115798;
-}
-
-.professional-links a:hover {
-    text-decoration: underline;
-}
-
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -193,6 +175,14 @@ footer {
     content: "➔";
     position: absolute;
     left: 0;
-    color: #115798;
+    color: #000000;
     font-size: 1.2em;
+}
+
+.arrow-list a:hover {
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #115798;
 }
