@@ -182,7 +182,7 @@ footer {
     content: "➤";
     position: absolute;
     left: 0;
-    top: 0.1em;
+    top: -0.1em;
     color: #000;
     font-size: 1em;
     font-family: "Segoe UI Symbol", "Arial Unicode MS", Arial, sans-serif;
