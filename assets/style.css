@@ -40,7 +40,7 @@ nav a::after {
     height: 2px;
     bottom: -3px;
     left: 0;
-    background-color: #47a3ff;
+    background-color: #115798;
     transform-origin: bottom right;
     transition: transform 0.3s ease;
 }
@@ -51,7 +51,7 @@ nav a:hover::after {
 }
 
 nav a:hover {
-    color: #47a3ff; /* Change color on hover */
+    color: #115798; /* Change color on hover */
 }
 
 main {
@@ -86,7 +86,7 @@ footer {
 
 .professional-links a {
     text-decoration: none;
-    color: #47a3ff;
+    color: #115798;
 }
 
 .professional-links a:hover {
@@ -128,7 +128,7 @@ footer {
 .project-card a {
     display: inline-block;
     margin-top: 0.8em;
-    color: #47a3ff;
+    color: #115798;
     text-decoration: none;
 }
 
@@ -143,7 +143,7 @@ footer {
 }
 
 .contact a {
-    color: #47a3ff;
+    color: #115798;
     text-decoration: none;
 }
 
@@ -182,4 +182,17 @@ footer {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transform: rotate(90deg); /* Rotate the image 90 degrees */
+}
+
+.arrow-list li {
+    list-style: none;
+    position: relative;
+    padding-left: 1.5em;
+}
+.arrow-list li::before {
+    content: "➔";
+    position: absolute;
+    left: 0;
+    color: #115798;
+    font-size: 1.2em;
 }
