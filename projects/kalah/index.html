@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalah Bot - Ethan Mader</title>
+    <link rel="stylesheet" href="../../assets/style.css">
+    <style>
+        .project-back {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: #1f66a9;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+        .project-back:hover {
+            text-decoration: underline;
+        }
+        .project-meta {
+            color: #555;
+            font-size: 0.95rem;
+            margin: 0.25rem 0 1.25rem;
+        }
+        .kalah-embed {
+            width: 100%;
+            height: 78vh;
+            min-height: 520px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #0b0d12;
+            display: block;
+        }
+        .embed-note {
+            margin-top: 1rem;
+            padding: 0.85rem 1rem;
+            background: #f9f6ec;
+            border: 1px solid #e8dfb8;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #5a4a1a;
+        }
+        .embed-note code {
+            background: #efe8cf;
+            padding: 0 0.3em;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Ethan Mader</h1>
+        <nav>
+            <a href="../../index.html">Home</a>
+            <!-- <a href="../../publications.html">Publications</a> -->
+            <!-- <a href="../../projects.html">Projects</a> -->
+        </nav>
+    </header>
+    <main>
+        <a href="../../projects.html" class="project-back">&larr; Back to Projects</a>
+        <h2>Kalah Bot</h2>
+        <p class="project-meta">Interactive game-tree explorer and play interface for Kalah(6,4). React frontend over a Python alpha-beta solver with a 15-stone endgame tablebase.</p>
+
+        <iframe
+            class="kalah-embed"
+            src="app.html"
+            title="Kalah Bot interactive demo"
+            loading="lazy"
+        ></iframe>
+
+        <p class="embed-note">
+            <strong>Note:</strong> this hosted demo renders the precomputed initial game tree (first 4 plies). Tree-node expansion and the <em>Play vs P1</em> mode rely on a local Python backend (the alpha-beta solver and a 15-stone endgame tablebase, ~800&nbsp;MB) and are not available here.
+        </p>
+    </main>
+    <footer>
+        <p></p>
+    </footer>
+</body>
+</html>
