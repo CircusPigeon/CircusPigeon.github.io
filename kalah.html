@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./projects/kalah/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kalah Bot - Ethan Mader</title>
+
+    <!-- Pure-JS port of the original Flask backend (kalah.py / solver.py /
+         strategy.py, minus the tablebase). Runs entirely in the browser. -->
+    <script src="./projects/kalah/kalah-engine.js"></script>
+
+    <!-- Fetch shim: the React bundle calls /api/{initial,expand,play/*}.
+         We route those to the JS engine and return JSON in the same shape. -->
+    <script>
+      (function () {
+        var _fetch = window.fetch.bind(window);
+
+        function jsonResponse(data, status) {
+          return new Response(JSON.stringify(data), {
+            status: status || 200,
+            headers: { "Content-Type": "application/json" },
+          });
+        }
+
+        // setTimeout(0) before invoking the engine — lets React paint its
+        // "loading" state before the alpha-beta search occupies the main
+        // thread for ~1 second on a fresh expand.
+        function deferred(fn) {
+          return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+              try { resolve(fn()); } catch (e) { reject(e); }
+            }, 0);
+          });
+        }
+
+        function parseBody(init) {
+          if (!init || init.body == null) return {};
+          if (typeof init.body === "string") return JSON.parse(init.body);
+          return init.body;
+        }
+
+        window.fetch = function (input, init) {
+          var url = typeof input === "string" ? input : (input && input.url) || "";
+          var path = url.split("?")[0];
+
+          // GET /api/initial → precomputed initial tree (4-ply, depth-12).
+          if (path === "/api/initial" || /\/api\/initial$/.test(path)) {
+            return _fetch("./projects/kalah/initial_tree.json", init);
+          }
+
+          // POST /api/expand → expand a node's children with depth-12 alphabeta.
+          if (/\/api\/expand$/.test(path)) {
+            var body = parseBody(init);
+            return deferred(function () {
+              return jsonResponse(window.KalahEngine.expandNode(body));
+            });
+          }
+
+          // POST /api/play/start → start a new game; bot opens.
+          if (/\/api\/play\/start$/.test(path)) {
+            return deferred(function () {
+              return jsonResponse(window.KalahEngine.startPlay());
+            });
+          }
+
+          // POST /api/play/move → apply user move + bot response chain.
+          if (/\/api\/play\/move$/.test(path)) {
+            var moveBody = parseBody(init);
+            return deferred(function () {
+              var r = window.KalahEngine.userMove(moveBody);
+              if (r.__status) {
+                var status = r.__status;
+                delete r.__status;
+                return jsonResponse(r, status);
+              }
+              return jsonResponse(r);
+            });
+          }
+
+          return _fetch(input, init);
+        };
+      })();
+    </script>
+
+    <script type="module" crossorigin src="./projects/kalah/assets/index-B4mY56zR.js"></script>
+    <link rel="stylesheet" crossorigin href="./projects/kalah/assets/index-LSE_83R-.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

@@ -1,52 +1,12 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kalah Bot</title>
-    <script>
-      // Static-mode shim. The original app talks to a Flask backend; on this
-      // hosted version we serve the precomputed initial tree from a static
-      // file and gracefully reject endpoints that need live computation.
-      (function () {
-        const _fetch = window.fetch.bind(window);
-        const STATIC_NOTE =
-          'Live demo: this action requires the local Flask backend (alpha-beta solver / endgame tablebase). Clone the repo and run the backend to enable expansion and Play vs P1.';
-
-        function isApi(url, suffix) {
-          return url === '/api/' + suffix
-            || url.endsWith('/api/' + suffix);
-        }
-
-        window.fetch = function (input, init) {
-          const url =
-            typeof input === 'string'
-              ? input
-              : (input && input.url) || '';
-
-          if (isApi(url, 'initial')) {
-            return _fetch('./initial_tree.json', init);
-          }
-
-          if (url.indexOf('/api/') !== -1) {
-            const body = JSON.stringify({ error: STATIC_NOTE, legal: [] });
-            return Promise.resolve(
-              new Response(body, {
-                status: 503,
-                headers: { 'Content-Type': 'application/json' },
-              })
-            );
-          }
-
-          return _fetch(input, init);
-        };
-      })();
-    </script>
-    <script type="module" crossorigin src="./assets/index-B4mY56zR.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-LSE_83R-.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <title>Kalah Bot</title>
+  <meta http-equiv="refresh" content="0; url=/kalah.html">
+  <link rel="canonical" href="/kalah.html">
+</head>
+<body>
+  <p>Redirecting to <a href="/kalah.html">/kalah.html</a>&hellip;</p>
+</body>
 </html>
