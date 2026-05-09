@@ -6,31 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kalah Bot - Ethan Mader</title>
 
-    <!-- Pure-JS port of the original Flask backend (kalah.py / solver.py /
-         strategy.py, minus the tablebase). Runs entirely in the browser. -->
-    <script src="./projects/kalah/kalah-engine.js"></script>
-
     <!-- Fetch shim: the React bundle calls /api/{initial,expand,play/*}.
-         We route those to the JS engine and return JSON in the same shape. -->
+         /api/initial reads the precomputed JSON from disk; the rest go to
+         a Web Worker (kalah-worker.js) that runs the alpha-beta engine on
+         a background thread. The UI stays at 60fps even during multi-
+         second searches because no work happens on the main thread. -->
     <script>
       (function () {
         var _fetch = window.fetch.bind(window);
+
+        // ----- Worker plumbing -----
+        var _worker = null;
+        var _nextId = 1;
+        var _pending = new Map();
+
+        function ensureWorker() {
+          if (_worker) return _worker;
+          _worker = new Worker("./projects/kalah/kalah-worker.js");
+          _worker.onmessage = function (e) {
+            var msg = e.data || {};
+            var p = _pending.get(msg.id);
+            if (!p) return;
+            _pending.delete(msg.id);
+            if ("error" in msg) p.reject(new Error(msg.error));
+            else p.resolve(msg.result);
+          };
+          _worker.onerror = function (e) {
+            // Hard worker error — fail every in-flight request so the
+            // app doesn't hang waiting on responses that won't arrive.
+            var err = new Error("kalah-worker error: " + (e.message || e));
+            _pending.forEach(function (p) { p.reject(err); });
+            _pending.clear();
+          };
+          return _worker;
+        }
+
+        function callEngine(method, args) {
+          var w = ensureWorker();
+          return new Promise(function (resolve, reject) {
+            var id = _nextId++;
+            _pending.set(id, { resolve: resolve, reject: reject });
+            w.postMessage({ id: id, method: method, args: args });
+          });
+        }
 
         function jsonResponse(data, status) {
           return new Response(JSON.stringify(data), {
             status: status || 200,
             headers: { "Content-Type": "application/json" },
-          });
-        }
-
-        // setTimeout(0) before invoking the engine — lets React paint its
-        // "loading" state before the alpha-beta search occupies the main
-        // thread for ~1 second on a fresh expand.
-        function deferred(fn) {
-          return new Promise(function (resolve, reject) {
-            setTimeout(function () {
-              try { resolve(fn()); } catch (e) { reject(e); }
-            }, 0);
           });
         }
 
@@ -49,41 +72,31 @@
             return _fetch("./projects/kalah/initial_tree.json", init);
           }
 
-          // POST /api/expand → expand a node's children with depth-12 alphabeta.
-          // expandNode is async (yields between siblings), so we resolve
-          // the promise before wrapping in a Response.
+          // POST /api/expand → alpha-beta expand. Worker keeps the search
+          // off the UI thread; depth defaults to engine's EXPAND_DEPTH but
+          // line-apply requests pass a smaller depth for snappier paste.
           if (/\/api\/expand$/.test(path)) {
-            var body = parseBody(init);
-            return new Promise(function (resolve, reject) {
-              setTimeout(function () {
-                try {
-                  Promise.resolve(window.KalahEngine.expandNode(body))
-                    .then(function (r) { resolve(jsonResponse(r)); })
-                    .catch(reject);
-                } catch (e) { reject(e); }
-              }, 0);
-            });
+            return callEngine("expandNode", parseBody(init))
+              .then(function (r) { return jsonResponse(r); });
           }
 
-          // POST /api/play/start → start a new game; bot opens.
+          // POST /api/play/start → bot's opening sequence.
           if (/\/api\/play\/start$/.test(path)) {
-            return deferred(function () {
-              return jsonResponse(window.KalahEngine.startPlay());
-            });
+            return callEngine("startPlay", undefined)
+              .then(function (r) { return jsonResponse(r); });
           }
 
-          // POST /api/play/move → apply user move + bot response chain.
+          // POST /api/play/move → user move + bot response chain.
           if (/\/api\/play\/move$/.test(path)) {
-            var moveBody = parseBody(init);
-            return deferred(function () {
-              var r = window.KalahEngine.userMove(moveBody);
-              if (r.__status) {
-                var status = r.__status;
-                delete r.__status;
-                return jsonResponse(r, status);
-              }
-              return jsonResponse(r);
-            });
+            return callEngine("userMove", parseBody(init))
+              .then(function (r) {
+                if (r && r.__status) {
+                  var status = r.__status;
+                  delete r.__status;
+                  return jsonResponse(r, status);
+                }
+                return jsonResponse(r);
+              });
           }
 
           return _fetch(input, init);
