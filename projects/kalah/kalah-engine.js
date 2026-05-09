@@ -198,26 +198,45 @@
   // ------------------------------------------------------------------
   // /api/expand — port of app.py expand()
   // ------------------------------------------------------------------
+  // Async so we can yield to the event loop between siblings: each
+  // sibling's depth-12 alpha-beta search is hundreds of milliseconds, and
+  // a yield between them lets the browser repaint and process input
+  // (button hover states, scroll, the apply-line progress counter, etc.)
+  // instead of locking up for a full second per expand.
+  //
+  // `req.depth` overrides the default search depth (used by the
+  // line-apply path to expand quickly at lower-fidelity eval).
   function expandNode(req) {
     var board = req.board.slice();
     var toMove = req.toMove | 0;
     var gameOver = !!req.gameOver;
     var nodeId = req.nodeId || "";
+    var depth = (req.depth | 0) > 0 ? (req.depth | 0) : EXPAND_DEPTH;
 
-    if (gameOver) return { children: [] };
+    if (gameOver) return Promise.resolve({ children: [] });
 
-    var children = [];
     var moves = legalMoves(board, toMove);
-    for (var i = 0; i < moves.length; i++) {
+    var children = [];
+
+    function yieldFrame() {
+      return new Promise(function (resolve) { setTimeout(resolve, 0); });
+    }
+
+    function step(i) {
+      if (i >= moves.length) return Promise.resolve({ children: children });
       var m = moves[i];
       var r = makeMove(board, toMove, m);
       var childId = nodeId ? (nodeId + "-" + m) : ("" + m);
       var child = makeNode(childId, r.board,
                            r.gameOver ? null : r.nextPlayer,
-                           r.gameOver, EXPAND_DEPTH);
+                           r.gameOver, depth);
       children.push({ move: m, node: child });
+      // Yield BEFORE the next sibling, not before the first, so a
+      // single-child expand stays one tick rather than two.
+      return yieldFrame().then(function () { return step(i + 1); });
     }
-    return { children: children };
+
+    return step(0);
   }
 
   // ------------------------------------------------------------------

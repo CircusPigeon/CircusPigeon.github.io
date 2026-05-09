@@ -50,10 +50,18 @@
           }
 
           // POST /api/expand → expand a node's children with depth-12 alphabeta.
+          // expandNode is async (yields between siblings), so we resolve
+          // the promise before wrapping in a Response.
           if (/\/api\/expand$/.test(path)) {
             var body = parseBody(init);
-            return deferred(function () {
-              return jsonResponse(window.KalahEngine.expandNode(body));
+            return new Promise(function (resolve, reject) {
+              setTimeout(function () {
+                try {
+                  Promise.resolve(window.KalahEngine.expandNode(body))
+                    .then(function (r) { resolve(jsonResponse(r)); })
+                    .catch(reject);
+                } catch (e) { reject(e); }
+              }, 0);
             });
           }
 
@@ -83,8 +91,8 @@
       })();
     </script>
 
-    <script type="module" crossorigin src="./projects/kalah/assets/index-CYLkkFtd.js"></script>
-    <link rel="stylesheet" crossorigin href="./projects/kalah/assets/index-DmxU_USQ.css">
+    <script type="module" crossorigin src="./projects/kalah/assets/index-DG7xIOf6.js"></script>
+    <link rel="stylesheet" crossorigin href="./projects/kalah/assets/index-XpvRf9VM.css">
   </head>
   <body>
     <div id="root"></div>
